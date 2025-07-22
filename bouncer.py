@@ -39,6 +39,8 @@ class Bouncer:
         self.height = 240
 
         self.speed = 3
+        # # SPEED DEBUGGING
+        # self.speed = 30
 
         # comment out this, uncomment below to force a corner hit
         # initial pos, center of screen
