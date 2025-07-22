@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 import sys
 import os
 from pathlib import Path
+from playsound3 import playsound
 
 # needed to add pngs to exe
 def resource_path(relative_path):
@@ -37,14 +38,27 @@ class Bouncer:
         self.width = 320
         self.height = 240
 
-        # initial pos, center of screen
-        self.x = self.root.winfo_screenwidth()/2 - self.width/2
-        self.y = self.root.winfo_screenheight()/2 - self.width/2
-        
-        # speed, random direction
-        dir = [3, -3]
-        self.dx = rand.choice(dir)
-        self.dy = rand.choice(dir)
+        self.speed = 3
+
+        # # comment out this, uncomment below to force a corner hit
+        # # initial pos, center of screen
+        # self.x = self.root.winfo_screenwidth()/2 - self.width/2
+        # self.y = self.root.winfo_screenheight()/2 - self.width/2
+
+        # #small variance in starting pos
+        # self.x += rand.randint(-100, 100)
+        # self.y += rand.randint(-100, 100)
+
+        # # speed, random direction
+        # dir = [self.speed, -self.speed]
+        # self.dx = rand.choice(dir)
+        # self.dy = rand.choice(dir)
+
+        # comment out the above, uncomment this to force a corner hit
+        self.x = 100
+        self.y = 100
+        self.dx = -3
+        self.dy = -3
 
         self.images = []
         self.load_images()
@@ -101,23 +115,40 @@ class Bouncer:
         self.y += self.dy
 
         collision = False
+        corner = False
 
-        # bounce on collision, offset to deal with pngs being a little too big
-        if self.x + self.width >= self.screen_width:
+        top = bool(self.y + self.height >= self.screen_height)
+        right = bool(self.x + self.width >= self.screen_width)
+        bottom = bool(self.y <= 0)
+        left = bool(self.x <= 0)
+
+        # bounce on collision
+        if right:
             self.dx = -self.dx
             collision = True
-        if self.y + self.height >= self.screen_height:
+            if top or bottom:
+                corner = True
+        if top:
             self.dy = -self.dy
             collision = True
-        if self.x <= 0:
+            if left or right:
+                corner = True
+        if left:
             self.dx = -self.dx
             collision = True
-        if self.y <= 0:
+            if top or bottom:
+                corner = True
+        if bottom:
             self.dy = -self.dy
             collision = True
+            if left or right:
+                corner = True
 
         if collision:
             self.change_image()
+            if corner:
+                sound_path = resource_path('taco_baco.mp3')
+                playsound(sound_path)
 
     def change_image(self):
         self.current_image_index = (self.current_image_index + 1) % len(self.images)

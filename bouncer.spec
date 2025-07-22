@@ -6,7 +6,7 @@ a = Analysis(
     ['bouncer.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('taco_baco.mp3', '.')],  # Add the mp3 file to the root of the exe
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
