@@ -40,25 +40,25 @@ class Bouncer:
 
         self.speed = 3
 
-        # # comment out this, uncomment below to force a corner hit
-        # # initial pos, center of screen
-        # self.x = self.root.winfo_screenwidth()/2 - self.width/2
-        # self.y = self.root.winfo_screenheight()/2 - self.width/2
+        # comment out this, uncomment below to force a corner hit
+        # initial pos, center of screen
+        self.x = self.root.winfo_screenwidth()/2 - self.width/2
+        self.y = self.root.winfo_screenheight()/2 - self.width/2
 
-        # #small variance in starting pos
-        # self.x += rand.randint(-100, 100)
-        # self.y += rand.randint(-100, 100)
+        #small variance in starting pos
+        self.x += rand.randint(-100, 100)
+        self.y += rand.randint(-100, 100)
 
-        # # speed, random direction
-        # dir = [self.speed, -self.speed]
-        # self.dx = rand.choice(dir)
-        # self.dy = rand.choice(dir)
+        # speed, random direction
+        dir = [self.speed, -self.speed]
+        self.dx = rand.choice(dir)
+        self.dy = rand.choice(dir)
 
-        # comment out the above, uncomment this to force a corner hit
-        self.x = 100
-        self.y = 100
-        self.dx = -3
-        self.dy = -3
+        # # comment out the above, uncomment this to force a corner hit
+        # self.x = 100
+        # self.y = 100
+        # self.dx = -3
+        # self.dy = -3
 
         self.images = []
         self.load_images()
